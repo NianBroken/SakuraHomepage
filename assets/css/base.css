@@ -19,6 +19,7 @@
     --link-padding-inline: clamp(22px, calc(24px * var(--viewport-scale)), 24px);
     --link-gap: clamp(8px, calc(12px * var(--viewport-scale)), 12px);
     --link-row-gap: clamp(8px, calc(12px * var(--viewport-scale)), 12px);
+    --links-social-gap: clamp(8px, calc(10px * var(--viewport-scale)), 12px);
     --link-radius: calc(999px * var(--viewport-scale));
     --icon-button-size: clamp(34px, calc(40px * var(--viewport-scale)), 40px);
     --icon-font-size: clamp(14px, calc(16px * var(--viewport-scale)), 16px);
