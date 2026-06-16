@@ -1,25 +1,27 @@
 :root {
-    --fallback-background: #666666;
+    --fallback-background: rgb(44, 44, 46);
     --viewport-scale: 1;
     --page-padding-inline: clamp(10px, 8vw, 100px);
-    --page-padding-block: clamp(16px, 4vh, 40px);
-    --content-max-width: min(1240px, calc(100vw - (var(--page-padding-inline) * 2)));
-    --content-gap: calc(16px * var(--viewport-scale));
-    --avatar-size: calc(128px * var(--viewport-scale));
-    --title-size: calc(40px * var(--viewport-scale));
-    --subtitle-size: calc(18px * var(--viewport-scale));
-    --description-size: calc(18px * var(--viewport-scale));
-    --divider-width: calc(220px * var(--viewport-scale));
-    --divider-spacing: calc(20px * var(--viewport-scale));
-    --link-font-size: calc(16px * var(--viewport-scale));
-    --link-padding-block: calc(11px * var(--viewport-scale));
-    --link-padding-inline: calc(24px * var(--viewport-scale));
-    --link-gap: calc(12px * var(--viewport-scale));
-    --link-row-gap: calc(12px * var(--viewport-scale));
+    --page-padding-block: clamp(12px, 3.5vh, 36px);
+    --content-max-width: max-content;
+    --content-gap: calc(18px * var(--viewport-scale));
+    --avatar-size: clamp(84px, calc(128px * var(--viewport-scale)), 128px);
+    --title-size: clamp(30px, calc(40px * var(--viewport-scale)), 40px);
+    --subtitle-size: clamp(15px, calc(18px * var(--viewport-scale)), 18px);
+    --description-size: clamp(16px, calc(18px * var(--viewport-scale)), 18px);
+    --divider-width: clamp(180px, calc(220px * var(--viewport-scale)), 220px);
+    --divider-spacing-top: calc(4px * var(--viewport-scale));
+    --divider-spacing-bottom: calc(10px * var(--viewport-scale));
+    --description-bottom-gap: calc(16px * var(--viewport-scale));
+    --link-font-size: clamp(14px, calc(16px * var(--viewport-scale)), 16px);
+    --link-padding-block: clamp(10px, calc(11px * var(--viewport-scale)), 11px);
+    --link-padding-inline: clamp(22px, calc(24px * var(--viewport-scale)), 24px);
+    --link-gap: clamp(8px, calc(12px * var(--viewport-scale)), 12px);
+    --link-row-gap: clamp(8px, calc(12px * var(--viewport-scale)), 12px);
     --link-radius: calc(999px * var(--viewport-scale));
-    --icon-button-size: calc(46px * var(--viewport-scale));
-    --icon-font-size: calc(18px * var(--viewport-scale));
-    --icon-gap: calc(6px * var(--viewport-scale));
+    --icon-button-size: clamp(40px, calc(46px * var(--viewport-scale)), 46px);
+    --icon-font-size: clamp(16px, calc(18px * var(--viewport-scale)), 18px);
+    --icon-gap: clamp(4px, calc(6px * var(--viewport-scale)), 6px);
     --motion-duration: 2s;
     --motion-ease: cubic-bezier(0.19, 1, 0.22, 1);
     --motion-offset: calc(80px * var(--viewport-scale));
@@ -34,19 +36,33 @@
 html,
 body {
     width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    overflow: hidden;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 body {
     margin: 0;
     background: var(--fallback-background);
     color: #ffffff;
-    overflow: hidden;
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 body,
@@ -85,8 +101,8 @@ canvas {
     position: fixed;
     inset: 0;
     z-index: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 .sakura-canvas.is-hidden {
@@ -94,18 +110,20 @@ canvas {
 }
 
 .page {
-    position: fixed;
-    inset: 0;
+    position: relative;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
     padding: var(--page-padding-block) var(--page-padding-inline);
 }
 
 .page-shell {
-    width: 100%;
-    max-width: var(--content-max-width);
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    min-height: min-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -113,6 +131,7 @@ canvas {
     gap: var(--content-gap);
     text-align: center;
     pointer-events: none;
+    margin: auto;
 }
 
 .static-display,
@@ -149,11 +168,13 @@ canvas {
 .links,
 .social-links {
     width: 100%;
+    max-width: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--link-row-gap);
     pointer-events: none;
+    align-self: center;
 }
 
 .links > *,

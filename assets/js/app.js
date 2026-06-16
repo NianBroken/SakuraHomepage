@@ -96,11 +96,12 @@
         namespace.modal.init(data.modals);
         namespace.startSakuraBackground({
             canvas: canvas,
-            fallbackColor: "#666666"
+            fallbackColor: "rgb(44, 44, 46)"
         });
         layoutController = namespace.layout.createLayoutController({
             linkRoot: linkRoot,
-            socialRoot: socialRoot
+            socialRoot: socialRoot,
+            pageShell: document.getElementById("pageShell")
         });
         layoutController.run();
 

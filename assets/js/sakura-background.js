@@ -412,11 +412,10 @@
 
     function createController(options) {
         var canvas = options.canvas;
-        var fallbackColor = options.fallbackColor || "#666666";
+        var fallbackColor = options.fallbackColor || "rgb(44, 44, 46)";
         var rafId = 0;
         var animating = false;
         var disposed = false;
-        var fallbackTriggered = false;
         var gl = null;
         var pointFlower = {};
         var effectLib = {};
@@ -447,12 +446,6 @@
             dof: Vector3.create(10.0, 4.0, 8.0),
             matrix: Matrix44.createIdentity()
         };
-        var frameMonitor = {
-            totalCount: 0,
-            totalDurationMs: 0,
-            rollingDurations: []
-        };
-
         function setFallbackAppearance() {
             canvas.classList.add("is-hidden");
             document.body.style.backgroundColor = fallbackColor;
@@ -460,7 +453,7 @@
 
         function clearFallbackAppearance() {
             canvas.classList.remove("is-hidden");
-            document.body.style.backgroundColor = fallbackColor;
+            document.body.style.backgroundColor = "";
         }
 
         renderSpec.setSize = function (width, height) {
@@ -1064,13 +1057,8 @@
         }
 
         function makeCanvasFullScreen(targetCanvas) {
-            var body = document.body;
-            var doc = document.documentElement;
-            var fullWidth = Math.max(body.clientWidth, body.scrollWidth, doc.scrollWidth, doc.clientWidth);
-            var fullHeight = Math.max(body.clientHeight, body.scrollHeight, doc.scrollHeight, doc.clientHeight);
-
-            targetCanvas.width = fullWidth;
-            targetCanvas.height = fullHeight;
+            targetCanvas.width = Math.max(1, window.innerWidth);
+            targetCanvas.height = Math.max(1, window.innerHeight);
         }
 
         function setViewports() {
@@ -1105,45 +1093,6 @@
             );
         }
 
-        function recordFrame() {
-            var frameDuration = timeInfo.delta * 1000.0;
-            var rollingSum = 0;
-            var index;
-            var averageFps;
-            var rollingFps;
-
-            if (frameDuration <= 0) {
-                return;
-            }
-
-            frameMonitor.totalCount += 1;
-            frameMonitor.totalDurationMs += frameDuration;
-            frameMonitor.rollingDurations.push(frameDuration);
-
-            if (frameMonitor.rollingDurations.length > 60) {
-                frameMonitor.rollingDurations.shift();
-            }
-
-            if (frameMonitor.rollingDurations.length === 60) {
-                for (index = 0; index < frameMonitor.rollingDurations.length; index += 1) {
-                    rollingSum += frameMonitor.rollingDurations[index];
-                }
-
-                rollingFps = 1000 / (rollingSum / 60);
-                if (rollingFps < 42) {
-                    triggerFallback();
-                    return;
-                }
-            }
-
-            if (frameMonitor.totalCount === 180) {
-                averageFps = 1000 / (frameMonitor.totalDurationMs / frameMonitor.totalCount);
-                if (averageFps < 50) {
-                    triggerFallback();
-                }
-            }
-        }
-
         function animate() {
             var currentDate;
 
@@ -1157,21 +1106,19 @@
             timeInfo.prev = currentDate;
 
             renderScene();
-            recordFrame();
 
-            if (animating && !fallbackTriggered && !disposed) {
+            if (animating && !disposed) {
                 rafId = window.requestAnimationFrame(animate);
             }
         }
 
         function onResize() {
-            if (!gl || disposed || fallbackTriggered) {
+            if (!gl || disposed) {
                 return;
             }
 
             makeCanvasFullScreen(canvas);
             if (!setViewports()) {
-                triggerFallback();
                 return;
             }
             initScene();
@@ -1243,16 +1190,6 @@
             gl = null;
         }
 
-        function triggerFallback() {
-            if (fallbackTriggered) {
-                return;
-            }
-
-            fallbackTriggered = true;
-            teardown();
-            setFallbackAppearance();
-        }
-
         function start() {
             if (disposed) {
                 return false;
@@ -1268,12 +1205,14 @@
             }
 
             if (!setViewports()) {
-                triggerFallback();
+                setFallbackAppearance();
+                teardown();
                 return false;
             }
 
             if (!createScene()) {
-                triggerFallback();
+                setFallbackAppearance();
+                teardown();
                 return false;
             }
 
