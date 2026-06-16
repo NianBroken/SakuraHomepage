@@ -4,23 +4,24 @@
     --page-padding-inline: clamp(10px, 8vw, 100px);
     --page-padding-block: clamp(12px, 3.5vh, 36px);
     --content-max-width: max-content;
-    --content-gap: calc(18px * var(--viewport-scale));
+    --content-gap: calc(10px * var(--viewport-scale));
     --avatar-size: clamp(84px, calc(128px * var(--viewport-scale)), 128px);
     --title-size: clamp(30px, calc(40px * var(--viewport-scale)), 40px);
     --subtitle-size: clamp(15px, calc(18px * var(--viewport-scale)), 18px);
     --description-size: clamp(16px, calc(18px * var(--viewport-scale)), 18px);
     --divider-width: clamp(180px, calc(220px * var(--viewport-scale)), 220px);
-    --divider-spacing-top: calc(4px * var(--viewport-scale));
-    --divider-spacing-bottom: calc(10px * var(--viewport-scale));
-    --description-bottom-gap: calc(16px * var(--viewport-scale));
+    --title-subtitle-gap: calc(2px * var(--viewport-scale));
+    --subtitle-divider-gap: calc(3px * var(--viewport-scale));
+    --divider-description-gap: calc(5px * var(--viewport-scale));
+    --description-bottom-gap: calc(22px * var(--viewport-scale));
     --link-font-size: clamp(14px, calc(16px * var(--viewport-scale)), 16px);
     --link-padding-block: clamp(10px, calc(11px * var(--viewport-scale)), 11px);
     --link-padding-inline: clamp(22px, calc(24px * var(--viewport-scale)), 24px);
     --link-gap: clamp(8px, calc(12px * var(--viewport-scale)), 12px);
     --link-row-gap: clamp(8px, calc(12px * var(--viewport-scale)), 12px);
     --link-radius: calc(999px * var(--viewport-scale));
-    --icon-button-size: clamp(40px, calc(46px * var(--viewport-scale)), 46px);
-    --icon-font-size: clamp(16px, calc(18px * var(--viewport-scale)), 18px);
+    --icon-button-size: clamp(34px, calc(40px * var(--viewport-scale)), 40px);
+    --icon-font-size: clamp(14px, calc(16px * var(--viewport-scale)), 16px);
     --icon-gap: clamp(4px, calc(6px * var(--viewport-scale)), 6px);
     --motion-duration: 2s;
     --motion-ease: cubic-bezier(0.19, 1, 0.22, 1);
@@ -43,7 +44,8 @@ body {
 html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     scrollbar-width: none;
 }
 
@@ -56,7 +58,8 @@ body {
     margin: 0;
     background: var(--fallback-background);
     color: #ffffff;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: auto;
     scrollbar-width: none;
 }
 
@@ -117,6 +120,7 @@ canvas {
     display: grid;
     place-items: center;
     padding: var(--page-padding-block) var(--page-padding-inline);
+    overflow: visible;
 }
 
 .page-shell {

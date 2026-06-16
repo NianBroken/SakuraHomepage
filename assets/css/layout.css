@@ -19,20 +19,22 @@
     font-size: var(--title-size);
     line-height: 1.15;
     letter-spacing: 0.02em;
+    margin-bottom: var(--title-subtitle-gap);
 }
 
 .profile-subtitle {
     font-size: var(--subtitle-size);
     line-height: 1.3;
     color: rgba(255, 255, 255, 0.78);
+    margin-bottom: var(--subtitle-divider-gap);
 }
 
 .profile-divider {
     width: min(100%, var(--divider-width));
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.14);
-    margin-top: var(--divider-spacing-top);
-    margin-bottom: var(--divider-spacing-bottom);
+    margin-top: 0;
+    margin-bottom: var(--divider-description-gap);
 }
 
 .profile-description {
@@ -136,6 +138,10 @@
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .link-chip--measure {
