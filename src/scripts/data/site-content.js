@@ -5,7 +5,7 @@
 
     namespace.siteData = {
         profile: {
-            avatarSrc: "assets/img/avatar.jpg",
+            avatarSrc: "public/images/avatar.jpg",
             title: "Klauthmos",
             subtitle: "NianBroken",
             description: "人生而自由 却无往不在枷锁之中"
@@ -59,7 +59,7 @@
         ],
         modals: {
             blogWechat: {
-                imageSrc: "assets/img/wechat.jpg",
+                imageSrc: "public/images/wechat.jpg",
                 imageAlt: "博客弹窗内容"
             }
         }

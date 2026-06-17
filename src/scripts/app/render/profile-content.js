@@ -3,21 +3,21 @@
 
     var namespace = window.SakuraHomepage || (window.SakuraHomepage = {});
 
-    function setDisplayContent(data) {
+    function populateProfile(profile) {
         var avatar = document.getElementById("profileAvatar");
         var title = document.getElementById("profileTitle");
         var subtitle = document.getElementById("profileSubtitle");
         var description = document.getElementById("profileDescription");
 
-        avatar.src = data.profile.avatarSrc;
-        avatar.alt = data.profile.title + " 头像";
+        avatar.src = profile.avatarSrc;
+        avatar.alt = profile.title + " 头像";
         avatar.draggable = false;
-        title.textContent = data.profile.title;
-        subtitle.textContent = data.profile.subtitle;
-        description.textContent = data.profile.description;
+        title.textContent = profile.title;
+        subtitle.textContent = profile.subtitle;
+        description.textContent = profile.description;
     }
 
-    function createPrimaryItem(item) {
+    function createPrimaryLink(item) {
         var element;
         var label = document.createElement("span");
 
@@ -49,7 +49,7 @@
         return element;
     }
 
-    function createSocialItem(item) {
+    function createSocialLink(item) {
         var link = document.createElement("a");
         var icon = document.createElement("i");
 
@@ -78,52 +78,11 @@
         root.replaceChildren(fragment);
     }
 
-    function startApp() {
-        var data = namespace.siteData;
-        var linkRoot = document.getElementById("primaryLinks");
-        var socialRoot = document.getElementById("socialLinks");
-        var canvas = document.getElementById("sakura-canvas");
-        var layoutController;
-        var entranceTargets;
-
-        if (!data) {
-            return;
-        }
-
-        setDisplayContent(data);
-        renderCollection(linkRoot, data.primaryLinks, createPrimaryItem);
-        renderCollection(socialRoot, data.socialLinks, createSocialItem);
-        namespace.modal.init(data.modals);
-        namespace.startSakuraBackground({
-            canvas: canvas,
-            fallbackColor: "rgb(44, 44, 46)"
-        });
-        layoutController = namespace.layout.createLayoutController({
-            linkRoot: linkRoot,
-            socialRoot: socialRoot,
-            pageShell: document.getElementById("pageShell")
-        });
-        layoutController.run();
-
-        entranceTargets = [
-            document.querySelector('[data-entrance="avatar"]'),
-            document.querySelector('[data-entrance="title"]'),
-            document.querySelector('[data-entrance="subtitle"]'),
-            document.querySelector('[data-entrance="divider"]'),
-            document.querySelector('[data-entrance="description"]'),
-            document.querySelector('[data-entrance="links"]'),
-            document.querySelector('[data-entrance="social"]')
-        ];
-
-        namespace.entrance.play(entranceTargets);
-        namespace.layoutController = layoutController;
+    function renderPageContent(data) {
+        populateProfile(data.profile);
+        renderCollection(document.getElementById("primaryLinks"), data.primaryLinks, createPrimaryLink);
+        renderCollection(document.getElementById("socialLinks"), data.socialLinks, createSocialLink);
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", startApp, {
-            once: true
-        });
-    } else {
-        startApp();
-    }
+    namespace.renderPageContent = renderPageContent;
 })(window, document);
