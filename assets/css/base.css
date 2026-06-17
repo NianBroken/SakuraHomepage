@@ -24,6 +24,11 @@
     --icon-button-size: clamp(34px, calc(40px * var(--viewport-scale)), 40px);
     --icon-font-size: clamp(14px, calc(16px * var(--viewport-scale)), 16px);
     --icon-gap: clamp(4px, calc(6px * var(--viewport-scale)), 6px);
+    --modal-scale-factor: clamp(0.56, calc(0.92 - ((var(--viewport-scale) - 0.46) * 0.85)), 0.92);
+    --modal-size-limit: min(
+        calc(var(--modal-scale-factor) * 100vw),
+        calc(var(--modal-scale-factor) * 100vh)
+    );
     --motion-duration: 2s;
     --motion-ease: cubic-bezier(0.19, 1, 0.22, 1);
     --motion-offset: calc(80px * var(--viewport-scale));
