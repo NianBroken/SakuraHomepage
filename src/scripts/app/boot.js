@@ -2,6 +2,7 @@
     "use strict";
 
     var namespace = window.SakuraHomepage || (window.SakuraHomepage = {});
+    var appStarted = false;
 
     function collectEntranceTargets() {
         return [
@@ -40,10 +41,18 @@
         });
     }
 
+    function playEntranceWhenReady(targets) {
+        window.requestAnimationFrame(function () {
+            namespace.entrance.play(targets);
+            window.requestAnimationFrame(startBackgroundWhenReady);
+        });
+    }
+
     function startApp() {
         var data = namespace.siteData;
         var layoutController;
         var protectedRoot = document.getElementById("pageShell");
+        var entranceTargets;
 
         if (!data) {
             return;
@@ -55,8 +64,35 @@
 
         layoutController = createLayoutController();
         layoutController.run();
-        namespace.entrance.play(collectEntranceTargets());
+        entranceTargets = collectEntranceTargets();
+        playEntranceWhenReady(entranceTargets);
         namespace.layoutController = layoutController;
+        appStarted = true;
+    }
+
+    function handlePageShow(event) {
+        var layoutController = namespace.layoutController;
+        var entranceTargets = collectEntranceTargets();
+
+        if (!appStarted) {
+            startApp();
+            return;
+        }
+
+        if (!event.persisted) {
+            return;
+        }
+
+        if (layoutController) {
+            layoutController.run();
+        }
+
+        if (!namespace.entrance.isPlayed(entranceTargets)) {
+            playEntranceWhenReady(entranceTargets);
+            return;
+        }
+
+        namespace.backgroundStarted = false;
         window.requestAnimationFrame(startBackgroundWhenReady);
     }
 
@@ -67,4 +103,6 @@
     } else {
         startApp();
     }
+
+    window.addEventListener("pageshow", handlePageShow);
 })(window, document);

@@ -144,6 +144,38 @@ canvas {
     margin: auto;
 }
 
+@keyframes entrance-fade-up {
+    0% {
+        opacity: var(--entrance-start-opacity, 0);
+        transform: translate3d(0, var(--motion-offset), 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes entrance-hidden-fade-up {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+        transform: translate3d(0, var(--motion-offset), 0);
+    }
+
+    0.01% {
+        visibility: visible;
+        opacity: 0;
+        transform: translate3d(0, var(--motion-offset), 0);
+    }
+
+    100% {
+        visibility: visible;
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
 .static-display,
 .static-display * {
     user-select: none;
@@ -170,23 +202,54 @@ canvas {
     visibility: hidden;
     opacity: 0;
     transform: translate3d(0, var(--motion-offset), 0);
-    transition:
-        opacity var(--motion-duration) var(--motion-ease),
-        transform var(--motion-duration) var(--motion-ease),
-        visibility 0s linear var(--motion-duration);
+    pointer-events: none;
     will-change: opacity, transform;
 }
 
 .entrance-target.entrance-text {
     visibility: visible;
-    opacity: 0.24;
+    --entrance-start-opacity: 0.24;
+    opacity: var(--entrance-start-opacity);
+}
+
+.profile-divider.entrance-target {
+    visibility: visible;
+    --entrance-start-opacity: 0;
+}
+
+.profile-description.entrance-target {
+    visibility: hidden;
+    --entrance-start-opacity: 0;
+    opacity: 0;
 }
 
 .entrance-target.is-visible {
-    visibility: visible;
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    transition-delay: 0s;
+    animation-duration: var(--motion-duration);
+    animation-timing-function: var(--motion-ease);
+    animation-fill-mode: both;
+    animation-delay: var(--entrance-delay, 0ms);
+}
+
+.entrance-target.entrance-text.is-visible,
+.profile-divider.entrance-target.is-visible {
+    animation-name: entrance-fade-up;
+}
+
+.profile-description.entrance-target.is-visible {
+    animation-name: entrance-hidden-fade-up;
+}
+
+.entrance-target:not(.entrance-text):not(.profile-divider).is-visible {
+    animation-name: entrance-hidden-fade-up;
+}
+
+.entrance-target.is-complete {
+    pointer-events: auto;
+}
+
+.links.entrance-target:not(.is-complete) > *,
+.social-links.entrance-target:not(.is-complete) > * {
+    pointer-events: none;
 }
 
 .links,
