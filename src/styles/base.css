@@ -50,9 +50,9 @@ body {
 html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     scrollbar-width: none;
+    overscroll-behavior: none;
 }
 
 html::-webkit-scrollbar {
@@ -64,9 +64,9 @@ body {
     margin: 0;
     background: var(--fallback-background);
     color: #ffffff;
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow: hidden;
     scrollbar-width: none;
+    overscroll-behavior: none;
 }
 
 body::-webkit-scrollbar {
@@ -157,6 +157,15 @@ canvas {
     pointer-events: none;
 }
 
+[data-protected-content],
+[data-protected-content] * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+}
+
 .entrance-target {
     visibility: hidden;
     opacity: 0;
@@ -190,4 +199,14 @@ canvas {
 .links > *,
 .social-links > * {
     pointer-events: auto;
+}
+
+html.has-horizontal-overflow,
+body.has-horizontal-overflow {
+    overflow-x: auto;
+}
+
+html.has-vertical-overflow,
+body.has-vertical-overflow {
+    overflow-y: auto;
 }

@@ -222,7 +222,10 @@
         var documentHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight, shellHeight);
         var allowHorizontal = documentWidth > viewportWidth + 1;
         var allowVertical = documentHeight > viewportHeight + 1;
+        var root = document.documentElement;
 
+        root.classList.toggle("has-horizontal-overflow", allowHorizontal);
+        root.classList.toggle("has-vertical-overflow", allowVertical);
         document.body.classList.toggle("has-horizontal-overflow", allowHorizontal);
         document.body.classList.toggle("has-vertical-overflow", allowVertical);
         pageShell.classList.toggle("has-horizontal-overflow", allowHorizontal);

@@ -23,9 +23,27 @@
         });
     }
 
+    function startBackgroundWhenReady() {
+        if (typeof namespace.startSakuraBackground !== "function") {
+            window.requestAnimationFrame(startBackgroundWhenReady);
+            return;
+        }
+
+        if (namespace.backgroundStarted === true) {
+            return;
+        }
+
+        namespace.backgroundStarted = true;
+        namespace.startSakuraBackground({
+            canvas: document.getElementById("sakura-canvas"),
+            fallbackColor: "rgb(44, 44, 46)"
+        });
+    }
+
     function startApp() {
         var data = namespace.siteData;
         var layoutController;
+        var protectedRoot = document.getElementById("pageShell");
 
         if (!data) {
             return;
@@ -33,16 +51,13 @@
 
         namespace.renderPageContent(data);
         namespace.modal.init(data.modals);
-        namespace.startSakuraBackground({
-            canvas: document.getElementById("sakura-canvas"),
-            fallbackColor: "rgb(44, 44, 46)"
-        });
+        namespace.contentGuard.init(protectedRoot);
 
         layoutController = createLayoutController();
         layoutController.run();
-
         namespace.entrance.play(collectEntranceTargets());
         namespace.layoutController = layoutController;
+        window.requestAnimationFrame(startBackgroundWhenReady);
     }
 
     if (document.readyState === "loading") {

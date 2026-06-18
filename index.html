@@ -18,14 +18,15 @@
     <script defer src="./src/scripts/app/ui/entrance.js"></script>
     <script defer src="./src/scripts/app/layout/responsive-layout.js"></script>
     <script defer src="./src/scripts/app/render/profile-content.js"></script>
-    <script defer src="./src/scripts/app/sakura-background.js"></script>
+    <script defer src="./src/scripts/app/ui/content-guard.js"></script>
     <script defer src="./src/scripts/app/boot.js"></script>
+    <script defer src="./src/scripts/app/sakura-background.js"></script>
 </head>
 <body>
     <canvas id="sakura-canvas" class="sakura-canvas" aria-hidden="true"></canvas>
 
     <main class="page" aria-label="主页内容">
-        <section class="page-shell" id="pageShell">
+        <section class="page-shell" id="pageShell" data-protected-content="true">
             <div class="avatar-frame static-display entrance-target" data-entrance="avatar">
                 <img
                     id="profileAvatar"

@@ -35,6 +35,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     margin-top: 0;
     margin-bottom: var(--divider-description-gap);
+    pointer-events: none;
 }
 
 .profile-description {
