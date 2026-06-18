@@ -177,6 +177,11 @@ canvas {
     will-change: opacity, transform;
 }
 
+.entrance-target.entrance-text {
+    visibility: visible;
+    opacity: 0.24;
+}
+
 .entrance-target.is-visible {
     visibility: visible;
     opacity: 1;
