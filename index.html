@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="./src/styles/base.css">
     <link rel="stylesheet" href="./src/styles/layout.css">
     <script defer src="./src/scripts/data/site-content.js"></script>
+    <script defer src="./src/scripts/app/shared/image-loader.js"></script>
     <script defer src="./src/scripts/app/ui/modal-controller.js"></script>
     <script defer src="./src/scripts/app/ui/entrance.js"></script>
     <script defer src="./src/scripts/app/layout/responsive-layout.js"></script>
@@ -27,11 +28,14 @@
 
     <main class="page" aria-label="主页内容">
         <section class="page-shell" id="pageShell" data-protected-content="true">
-            <div class="avatar-frame static-display entrance-target" data-entrance="avatar">
+            <div
+                id="profileAvatarFrame"
+                class="avatar-frame static-display entrance-target"
+                data-entrance="avatar"
+            >
                 <img
                     id="profileAvatar"
                     class="avatar-image"
-                    src=""
                     alt="头像"
                     draggable="false"
                 >

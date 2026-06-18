@@ -4,9 +4,8 @@
     var namespace = window.SakuraHomepage || (window.SakuraHomepage = {});
     var appStarted = false;
 
-    function collectEntranceTargets() {
+    function collectContentEntranceTargets() {
         return [
-            document.querySelector('[data-entrance="avatar"]'),
             document.querySelector('[data-entrance="title"]'),
             document.querySelector('[data-entrance="subtitle"]'),
             document.querySelector('[data-entrance="divider"]'),
@@ -64,7 +63,7 @@
 
         layoutController = createLayoutController();
         layoutController.run();
-        entranceTargets = collectEntranceTargets();
+        entranceTargets = collectContentEntranceTargets();
         playEntranceWhenReady(entranceTargets);
         namespace.layoutController = layoutController;
         appStarted = true;
@@ -72,7 +71,7 @@
 
     function handlePageShow(event) {
         var layoutController = namespace.layoutController;
-        var entranceTargets = collectEntranceTargets();
+        var entranceTargets = collectContentEntranceTargets();
 
         if (!appStarted) {
             startApp();

@@ -2,19 +2,42 @@
     "use strict";
 
     var namespace = window.SakuraHomepage || (window.SakuraHomepage = {});
+    var AVATAR_READY_CLASS = "is-ready";
+
+    function applyAvatarImage(avatar, sourceImage, altText) {
+        sourceImage.id = avatar.id;
+        sourceImage.className = avatar.className;
+        sourceImage.alt = altText;
+        sourceImage.draggable = false;
+        avatar.replaceWith(sourceImage);
+
+        return sourceImage;
+    }
 
     function populateProfile(profile) {
         var avatar = document.getElementById("profileAvatar");
+        var avatarFrame = document.getElementById("profileAvatarFrame");
         var title = document.getElementById("profileTitle");
         var subtitle = document.getElementById("profileSubtitle");
         var description = document.getElementById("profileDescription");
 
-        avatar.src = profile.avatarSrc;
-        avatar.alt = profile.title + " 头像";
         avatar.draggable = false;
+        avatar.alt = profile.title + " 头像";
+        avatar.removeAttribute("src");
+        avatarFrame.classList.remove(AVATAR_READY_CLASS);
         title.textContent = profile.title;
         subtitle.textContent = profile.subtitle;
         description.textContent = profile.description;
+
+        namespace.imageLoader.load(profile.avatarSrc)
+            .then(function (loadedImage) {
+                avatar = applyAvatarImage(avatar, loadedImage, profile.title + " 头像");
+                avatarFrame.classList.add(AVATAR_READY_CLASS);
+            })
+            .catch(function () {
+                avatar.removeAttribute("src");
+                avatarFrame.classList.remove(AVATAR_READY_CLASS);
+            });
     }
 
     function createPrimaryLink(item) {

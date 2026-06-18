@@ -3,16 +3,30 @@
     height: var(--avatar-size);
     border-radius: 50%;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow:
-        0 0 0 2px rgba(255, 255, 255, 0.5),
-        0 2px 20px 3px rgba(0, 0, 0, 0.25);
+    visibility: hidden;
+    background: transparent;
+    box-shadow: none;
 }
 
 .avatar-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+}
+
+.avatar-frame.is-ready {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.5),
+        0 2px 20px 3px rgba(0, 0, 0, 0.25);
+}
+
+.avatar-frame.is-ready .avatar-image {
+    opacity: 1;
 }
 
 .profile-title {
@@ -202,9 +216,27 @@
     transition: opacity 0.25s ease;
 }
 
+.modal.is-loading,
 .modal.is-open {
     opacity: 1;
     pointer-events: auto;
+}
+
+.modal__loader {
+    position: absolute;
+    width: calc(54px * var(--viewport-scale));
+    height: calc(54px * var(--viewport-scale));
+    border: calc(4px * var(--viewport-scale)) solid rgba(255, 255, 255, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.92);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: modal-loader-spin 0.8s linear infinite;
+    transition: opacity 0.12s linear;
+}
+
+.modal.is-loading .modal__loader {
+    opacity: 1;
 }
 
 .modal__image {
@@ -214,14 +246,28 @@
     max-height: var(--modal-size-limit);
     border-radius: calc(16px * var(--viewport-scale));
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+    opacity: 0;
     transform: translate3d(0, calc(18px * var(--viewport-scale)), 0) scale(0.96);
-    transition: transform 0.25s ease;
+    transition:
+        opacity 0.08s linear,
+        transform 0.25s ease;
 }
 
 .modal.is-open .modal__image {
+    opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
 }
 
 .modal.is-open .modal__image:hover {
     transform: translate3d(0, 0, 0) scale(1.01);
+}
+
+@keyframes modal-loader-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
