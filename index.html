@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Klauthmos">
+    <meta name="keywords" content="Klauthmos,NianBroken">
+    <meta name="author" content="Klauthmos">
+    <title>Klauthmos</title>
+    <link rel="apple-touch-icon" href="./public/icons/apple-touch-icon.png">
+    <link rel="icon" href="./public/icons/favicon.ico">
+    <link rel="stylesheet" href="./src/styles/base.css">
+    <link rel="stylesheet" href="./src/styles/layout.css">
+    <script defer src="./src/scripts/data/site-content.js"></script>
+    <script defer src="./src/scripts/app/shared/image-loader.js"></script>
+    <script defer src="./src/scripts/app/ui/modal-controller.js"></script>
+    <script defer src="./src/scripts/app/ui/entrance.js"></script>
+    <script defer src="./src/scripts/app/layout/responsive-layout.js"></script>
+    <script defer src="./src/scripts/app/render/profile-content.js"></script>
+    <script defer src="./src/scripts/app/ui/content-guard.js"></script>
+    <script defer src="./src/scripts/app/boot.js"></script>
+    <script defer src="./src/scripts/app/sakura-background.js"></script>
+</head>
+<body>
+    <canvas id="sakura-canvas" class="sakura-canvas" aria-hidden="true"></canvas>
+
+    <main class="page" aria-label="主页内容">
+        <section class="page-shell" id="pageShell" data-protected-content="true">
+            <div
+                id="profileAvatarFrame"
+                class="avatar-frame static-display entrance-target"
+                data-entrance="avatar"
+            >
+                <img
+                    id="profileAvatar"
+                    class="avatar-image"
+                    alt="头像"
+                    draggable="false"
+                >
+            </div>
+
+            <h1
+                id="profileTitle"
+                class="profile-title static-display entrance-target entrance-text"
+                data-entrance="title"
+            >Klauthmos</h1>
+
+            <p
+                id="profileSubtitle"
+                class="profile-subtitle static-display entrance-target entrance-text"
+                data-entrance="subtitle"
+            >NianBroken</p>
+
+            <hr class="profile-divider entrance-target" data-entrance="divider">
+
+            <p
+                id="profileDescription"
+                class="profile-description static-display entrance-target entrance-text"
+                data-entrance="description"
+            >人生而自由 却无往不在枷锁之中</p>
+
+            <nav
+                id="primaryLinks"
+                class="links entrance-target"
+                data-entrance="links"
+                aria-label="主要条目"
+            ></nav>
+
+            <nav
+                id="socialLinks"
+                class="social-links entrance-target"
+                data-entrance="social"
+                aria-label="底部图标"
+            ></nav>
+        </section>
+    </main>
+
+    <footer
+        id="siteFooter"
+        class="site-footer"
+        data-protected-content="true"
+        aria-label="版权信息"
+    >
+        <p id="siteCopyright" class="site-copyright" draggable="false">Copyright © 2026 NianBroken. All rights reserved.</p>
+    </footer>
+</body>
+</html>
